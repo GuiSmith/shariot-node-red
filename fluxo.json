@@ -44,7 +44,7 @@
         "y": 280,
         "wires": [
             [
-                "e6f3c4c51e6cd381"
+                "98efc15330fd5707"
             ]
         ]
     },
@@ -81,7 +81,7 @@
         "y": 340,
         "wires": [
             [
-                "e6f3c4c51e6cd381"
+                "daaa6a2a0bf36eb4"
             ]
         ]
     },
@@ -118,15 +118,15 @@
         "y": 220,
         "wires": [
             [
-                "e6f3c4c51e6cd381"
+                "e44a28d8a3bdd38e"
             ]
         ]
     },
     {
-        "id": "e6f3c4c51e6cd381",
+        "id": "e44a28d8a3bdd38e",
         "type": "mqtt out",
         "z": "d825e256770b54a7",
-        "name": "Broker ThingsBoard",
+        "name": "Requisição Temperatura ThingsBoard",
         "topic": "v1/devices/me/telemetry",
         "qos": "",
         "retain": "",
@@ -136,8 +136,44 @@
         "correl": "",
         "expiry": "",
         "broker": "e990a15958d6ede9",
+        "x": 670,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "98efc15330fd5707",
+        "type": "mqtt out",
+        "z": "d825e256770b54a7",
+        "name": "Requisição Presença ThingsBoard",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "e584059a44b71cf4",
         "x": 660,
         "y": 280,
+        "wires": []
+    },
+    {
+        "id": "daaa6a2a0bf36eb4",
+        "type": "mqtt out",
+        "z": "d825e256770b54a7",
+        "name": "ThingsBoard Distância Server",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "e5471d30ca503827",
+        "x": 670,
+        "y": 340,
         "wires": []
     },
     {
@@ -170,7 +206,69 @@
     {
         "id": "e990a15958d6ede9",
         "type": "mqtt-broker",
-        "name": "",
+        "name": "Temperatura Server",
+        "broker": "demo.thingsboard.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "true",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e584059a44b71cf4",
+        "type": "mqtt-broker",
+        "name": "Presença Server",
+        "broker": "demo.thingsboard.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e5471d30ca503827",
+        "type": "mqtt-broker",
+        "name": "Distância Server",
         "broker": "demo.thingsboard.io",
         "port": 1883,
         "clientid": "",
