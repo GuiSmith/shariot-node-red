@@ -1,0 +1,193 @@
+[
+    {
+        "id": "d825e256770b54a7",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "mqtt_sensor_ir",
+        "type": "mqtt in",
+        "z": "d825e256770b54a7",
+        "name": "Sensor Presença",
+        "topic": "presenca",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "mqtt_broker_local",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "parse_payload"
+            ]
+        ]
+    },
+    {
+        "id": "parse_payload",
+        "type": "function",
+        "z": "d825e256770b54a7",
+        "name": "Processa presença",
+        "func": "// Exemplo de dado: \"1\" ou \"0\"\nlet presenca = msg.payload;\n\n// Cria JSON pro ThingsBoard\nmsg.payload = {\n  presenca: presenca,\n};\n\n// Define cabeçalho e URL com a API key\nlet apiKey = \"dhwh2qz157sqvgl6pd39\";\nmsg.headers = { \"Content-Type\": \"application/json\" };\nmsg.url = `http://demo.thingsboard.io/api/v1/${apiKey}/telemetry`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "envia_thingsboard"
+            ]
+        ]
+    },
+    {
+        "id": "envia_thingsboard",
+        "type": "http request",
+        "z": "d825e256770b54a7",
+        "name": "Envia p/ ThingsBoard",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 620,
+        "y": 280,
+        "wires": [
+            [
+                "resposta_debug"
+            ]
+        ]
+    },
+    {
+        "id": "resposta_debug",
+        "type": "debug",
+        "z": "d825e256770b54a7",
+        "name": "Resposta ThingsBoard",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "74fa4cea2422f17c",
+        "type": "http in",
+        "z": "d825e256770b54a7",
+        "name": "Sensor Distância",
+        "url": "/distancia",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 340,
+        "wires": [
+            [
+                "0afcc2e6a894855f"
+            ]
+        ]
+    },
+    {
+        "id": "0afcc2e6a894855f",
+        "type": "function",
+        "z": "d825e256770b54a7",
+        "name": "Processa Distância",
+        "func": "// Exemplo de dado: \"0 até 400\"\nlet distancia = msg.payload.distancia;\n\n// Cria JSON pro ThingsBoard\nmsg.payload = {\n  distancia: distancia\n};\n\n// Define cabeçalho e URL com a API key\nlet apiKey = \"dhwh2qz157sqvgl6pd39\";\nmsg.headers = { \"Content-Type\": \"application/json\" };\nmsg.url = `http://demo.thingsboard.io/api/v1/${apiKey}/telemetry`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 340,
+        "wires": [
+            [
+                "envia_thingsboard"
+            ]
+        ]
+    },
+    {
+        "id": "6b67bf21fe729ad0",
+        "type": "http in",
+        "z": "d825e256770b54a7",
+        "name": "Sensor Temperatura",
+        "url": "/temperatura",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "b1aea22d3a466803"
+            ]
+        ]
+    },
+    {
+        "id": "b1aea22d3a466803",
+        "type": "function",
+        "z": "d825e256770b54a7",
+        "name": "Processa temperatura",
+        "func": "// Exemplo de dado: { \"temperatura\": 30.2 }\nlet temperatura = msg.payload.temperatura;\n\n// Cria JSON pro ThingsBoard\nmsg.payload = {\n  temperatura: temperatura\n};\n\n// Define cabeçalho e URL com a API key\nlet apiKey = \"dhwh2qz157sqvgl6pd39\";\nmsg.headers = { \"Content-Type\": \"application/json\" };\nmsg.url = `http://demo.thingsboard.io/api/v1/${apiKey}/telemetry`;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 220,
+        "wires": [
+            [
+                "envia_thingsboard"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_broker_local",
+        "type": "mqtt-broker",
+        "name": "Mosquitto Local",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

@@ -13,7 +13,28 @@ Execute:
 ```bash
 bash setup.sh
 ```
+## Node-red
 
+### Execução
+
+Após instalar as dependências, você pode iniciar o Node-RED com o comando:
+
+``` bash
+node-red
+```
+
+### Fluxo do Node-RED
+
+O fluxo principal do Node-RED está salvo no arquivo `fluxo.json` na raiz do projeto.
+
+Para importar o fluxo:
+
+1. Acesse o editor do Node-RED via navegador (normalmente `http://localhost:1880`);
+2. No menu superior direito, clique em **Importar**;
+3. Selecione o conteúdo do `fluxo.json` ou faça upload direto;
+4. Clique em **Importar** e depois **Deploy** para aplicar as alterações.
+
+O fluxo já está pronto para receber dados via MQTT e HTTP e enviar para o ThingsBoard.
 ## Simulações
 
 No diretório testes/, há scripts que simulam o envio de dados de sensores de forma individual ou em conjunto.
@@ -27,6 +48,6 @@ No diretório testes/, há scripts que simulam o envio de dados de sensores de f
 `simular_todos.sh` — executa todos os scripts acima em loop com pequenos intervalos
 
 Exemplo:
-``` json
+``` bash
 bash simular_todos.sh
 ```
