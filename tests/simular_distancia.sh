@@ -1,8 +1,8 @@
 #!/bin/bash
-# Envia distância aleatória (0-400) via HTTP POST para /distancia
+# Envia distância aleatória (0 a 400) via MQTT
 
 distancia=$(( RANDOM % 401 ))
-curl -s --max-time 1 -X POST http://localhost:1880/distancia \
-  -H "Content-Type: application/json" \
-  -d "{\"distancia\": $distancia}" > /dev/null
+
+mosquitto_pub -h localhost -t sensor/distancia -m "{\"distancia\": $distancia}"
+
 echo "Distância enviada: $distancia"

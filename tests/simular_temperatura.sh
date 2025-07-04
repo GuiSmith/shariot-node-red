@@ -1,8 +1,11 @@
 #!/bin/bash
-# Envia temperatura aleatória (0-50) via HTTP POST para /temperatura
+# Envia temperatura aleatória (0,0 a 50,9) com vírgula decimal via MQTT
 
-temperatura=$(( RANDOM % 51 ))
-curl -s --max-time 1 -X POST http://localhost:1880/temperatura \
-  -H "Content-Type: application/json" \
-  -d "{\"temperatura\": $temperatura}" > /dev/null
+inteiro=$(( RANDOM % 51 ))
+decimal=$(( RANDOM % 10 ))
+
+temperatura="$inteiro.$decimal"
+
+mosquitto_pub -h localhost -t sensor/temperatura -m "{\"temperatura\":\"$temperatura\"}"
+
 echo "Temperatura enviada: $temperatura"
