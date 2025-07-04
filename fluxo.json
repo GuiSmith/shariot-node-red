@@ -33,7 +33,7 @@
         "type": "function",
         "z": "d825e256770b54a7",
         "name": "Processa presença",
-        "func": "// Exemplo de dado: \"1\" ou \"0\"\nlet presenca = msg.payload;\n\n// Cria JSON pro ThingsBoard\nmsg.payload = {\n  presenca: presenca,\n};\n\n// Define cabeçalho e URL com a API key\nlet apiKey = \"dhwh2qz157sqvgl6pd39\";\nmsg.headers = { \"Content-Type\": \"application/json\" };\nmsg.url = `http://demo.thingsboard.io/api/v1/${apiKey}/telemetry`;\n\nreturn msg;",
+        "func": "let presenca = msg.payload;\n\nmsg.payload = JSON.stringify({\n  presenca: presenca\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -44,50 +44,9 @@
         "y": 280,
         "wires": [
             [
-                "envia_thingsboard"
+                "e6f3c4c51e6cd381"
             ]
         ]
-    },
-    {
-        "id": "envia_thingsboard",
-        "type": "http request",
-        "z": "d825e256770b54a7",
-        "name": "Envia p/ ThingsBoard",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "x": 620,
-        "y": 280,
-        "wires": [
-            [
-                "resposta_debug"
-            ]
-        ]
-    },
-    {
-        "id": "resposta_debug",
-        "type": "debug",
-        "z": "d825e256770b54a7",
-        "name": "Resposta ThingsBoard",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 840,
-        "y": 280,
-        "wires": []
     },
     {
         "id": "74fa4cea2422f17c",
@@ -111,7 +70,7 @@
         "type": "function",
         "z": "d825e256770b54a7",
         "name": "Processa Distância",
-        "func": "// Exemplo de dado: \"0 até 400\"\nlet distancia = msg.payload.distancia;\n\n// Cria JSON pro ThingsBoard\nmsg.payload = {\n  distancia: distancia\n};\n\n// Define cabeçalho e URL com a API key\nlet apiKey = \"dhwh2qz157sqvgl6pd39\";\nmsg.headers = { \"Content-Type\": \"application/json\" };\nmsg.url = `http://demo.thingsboard.io/api/v1/${apiKey}/telemetry`;\n\nreturn msg;",
+        "func": "let distancia = msg.payload.distancia;\n\nmsg.payload = JSON.stringify({\n  distancia: distancia\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -122,7 +81,7 @@
         "y": 340,
         "wires": [
             [
-                "envia_thingsboard"
+                "e6f3c4c51e6cd381"
             ]
         ]
     },
@@ -148,7 +107,7 @@
         "type": "function",
         "z": "d825e256770b54a7",
         "name": "Processa temperatura",
-        "func": "// Exemplo de dado: { \"temperatura\": 30.2 }\nlet temperatura = msg.payload.temperatura;\n\n// Cria JSON pro ThingsBoard\nmsg.payload = {\n  temperatura: temperatura\n};\n\n// Define cabeçalho e URL com a API key\nlet apiKey = \"dhwh2qz157sqvgl6pd39\";\nmsg.headers = { \"Content-Type\": \"application/json\" };\nmsg.url = `http://demo.thingsboard.io/api/v1/${apiKey}/telemetry`;\n\nreturn msg;\n",
+        "func": "let temperatura = msg.payload.temperatura;\n\n// Cria JSON string pro ThingsBoard MQTT\nmsg.payload = JSON.stringify({\n  temperatura: temperatura\n});\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -159,9 +118,27 @@
         "y": 220,
         "wires": [
             [
-                "envia_thingsboard"
+                "e6f3c4c51e6cd381"
             ]
         ]
+    },
+    {
+        "id": "e6f3c4c51e6cd381",
+        "type": "mqtt out",
+        "z": "d825e256770b54a7",
+        "name": "Broker ThingsBoard",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "e990a15958d6ede9",
+        "x": 660,
+        "y": 280,
+        "wires": []
     },
     {
         "id": "mqtt_broker_local",
@@ -185,6 +162,37 @@
         "closeMsg": {},
         "willTopic": "",
         "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e990a15958d6ede9",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "demo.thingsboard.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
         "willPayload": "",
         "willMsg": {},
         "userProps": "",
